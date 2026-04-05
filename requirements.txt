@@ -1,0 +1,5 @@
+﻿# ClawAF Requirements
+# For automatic assessment script
+
+# No external dependencies required
+# Uses only Python standard library
