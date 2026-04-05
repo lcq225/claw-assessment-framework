@@ -30,16 +30,65 @@ pip install -r requirements.txt
 
 ### 自动评估（推荐）
 
-脚本会自动扫描您的Claw目录，基于实际文件和配置进行评价：
+脚本会自动扫描您的Claw工作区目录，基于实际文件和配置进行评价：
 
 ```bash
 python assess_auto.py
 ```
 
-或指定您的Claw目录：
+或指定您的Claw工作区目录：
 
 ```bash
-python assess_auto.py --dir /path/to/your/claw
+# CoPaw 示例
+python assess_auto.py --dir "D:\CoPaw\.copaw\workspaces\default"
+
+# OpenClaw 示例
+python assess_auto.py --dir "/path/to/openclaw/.copaw/workspaces/default"
+
+# Linux/Mac 示例
+python assess_auto.py --dir "~/copaw/.copaw/workspaces/default"
+```
+
+**重要说明：** `--dir` 参数应指向**工作区目录**（包含 `AGENTS.md`、`SOUL.md`、`PROFILE.md`、`skills/` 的文件夹），而不是项目根目录。
+
+**Claw 目录结构：**
+
+```
+项目根目录/
+├── .copaw/
+│   ├── workspaces/
+│   │   ├── default/           <-- 评估这个目录（工作区目录）
+│   │   │   ├── AGENTS.md
+│   │   │   ├── SOUL.md
+│   │   │   ├── PROFILE.md
+│   │   │   └── skills/
+│   │   └── other-workspace/
+│   └── skills/               <-- 全局技能（可选）
+└── ... (项目文件)
+```
+
+### 目录诊断工具
+
+不确定哪个目录应该评估？使用诊断工具自动查找：
+
+```bash
+python diagnose.py --dir "D:\CoPaw"
+```
+
+诊断工具会：
+1. 检查当前目录是否为工作区
+2. 搜索所有可用的工作区目录
+3. 提供正确的评估命令
+
+示例输出：
+```
+Found workspace directories:
+
+1. D:\CoPaw\.copaw\workspaces\default
+   Command: python assess_auto.py --dir "D:\CoPaw\.copaw\workspaces\default"
+   Files: AGENTS.md SOUL.md PROFILE.md
+
+Recommended: Use the first workspace directory
 ```
 
 **工作原理：**

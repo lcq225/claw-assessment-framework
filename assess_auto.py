@@ -668,9 +668,43 @@ def main():
     """Main entry point"""
     parser = argparse.ArgumentParser(
         description='ClawAF Automatic Evaluation',
-        epilog='Example: python assess_auto.py --dir /path/to/claw'
+        epilog="""
+Examples:
+
+  # Auto-detect Claw workspace directory
+  python assess_auto.py
+
+  # Specify workspace directory (CoPaw example)
+  python assess_auto.py --dir "D:\\CoPaw\\.copaw\\workspaces\\default"
+
+  # Specify workspace directory (OpenClaw example)
+  python assess_auto.py --dir "/path/to/openclaw/.copaw/workspaces/default"
+
+  # Specify workspace directory (Linux/Mac)
+  python assess_auto.py --dir "~/copaw/.copaw/workspaces/default"
+
+Note:
+  - The --dir parameter should point to the WORKSPACE directory
+  - Workspace directory contains: AGENTS.md, SOUL.md, PROFILE.md, skills/
+  - If not specified, auto-detection will search in current and parent directories
+
+Claw Directory Structure:
+  project-root/
+  ├── .copaw/
+  │   ├── workspaces/
+  │   │   ├── default/           <-- EVALUATE THIS (workspace directory)
+  │   │   │   ├── AGENTS.md
+  │   │   │   ├── SOUL.md
+  │   │   │   ├── PROFILE.md
+  │   │   │   └── skills/
+  │   │   └── other-workspace/
+  │   └── skills/               <-- Global skills (optional)
+  └── ... (project files)
+        """
     )
-    parser.add_argument('--dir', type=str, help='Claw directory (auto-detect if not specified)')
+    parser.add_argument('--dir', '--workspace',
+                       type=str,
+                       help='Claw workspace directory (contains AGENTS.md/SOUL.md/PROFILE.md/skills/). Auto-detect if not specified.')
     parser.add_argument('--output', type=str, default='clawaf_result.json', help='Output JSON file')
 
     args = parser.parse_args()

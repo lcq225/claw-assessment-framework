@@ -30,16 +30,65 @@ pip install -r requirements.txt
 
 ### Automatic Evaluation (Recommended)
 
-The script will automatically scan your Claw directory and evaluate based on actual files and configurations:
+The script will automatically scan your Claw workspace directory and evaluate based on actual files and configurations:
 
 ```bash
 python assess_auto.py
 ```
 
-Or specify your Claw directory:
+Or specify your Claw workspace directory:
 
 ```bash
-python assess_auto.py --dir /path/to/your/claw
+# CoPaw example
+python assess_auto.py --dir "D:\CoPaw\.copaw\workspaces\default"
+
+# OpenClaw example
+python assess_auto.py --dir "/path/to/openclaw/.copaw/workspaces/default"
+
+# Linux/Mac example
+python assess_auto.py --dir "~/copaw/.copaw/workspaces/default"
+```
+
+**Important:** The `--dir` parameter should point to the **workspace directory** (the folder containing `AGENTS.md`, `SOUL.md`, `PROFILE.md`, and `skills/`), not the project root directory.
+
+**Claw Directory Structure:**
+
+```
+project-root/
+├── .copaw/
+│   ├── workspaces/
+│   │   ├── default/           <-- EVALUATE THIS (workspace directory)
+│   │   │   ├── AGENTS.md
+│   │   │   ├── SOUL.md
+│   │   │   ├── PROFILE.md
+│   │   │   └── skills/
+│   │   └── other-workspace/
+│   └── skills/               <-- Global skills (optional)
+└── ... (project files)
+```
+
+### Directory Diagnostic Tool
+
+Not sure which directory to evaluate? Use the diagnostic tool:
+
+```bash
+python diagnose.py --dir "D:\CoPaw"
+```
+
+The diagnostic tool will:
+1. Check if the current directory is a workspace
+2. Search for all available workspace directories
+3. Provide the correct evaluation command
+
+Example output:
+```
+Found workspace directories:
+
+1. D:\CoPaw\.copaw\workspaces\default
+   Command: python assess_auto.py --dir "D:\CoPaw\.copaw\workspaces\default"
+   Files: AGENTS.md SOUL.md PROFILE.md
+
+Recommended: Use the first workspace directory
 ```
 
 **How it works:**
@@ -446,18 +495,19 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 claw-assessment-framework/
 ├── README.md                    # English documentation
 ├── README_zh.md                 # Chinese documentation
+├── CHANGELOG.md                 # Version history
 ├── LICENSE                      # MIT License
 ├── .gitignore                   # Git ignore rules
 ├── requirements.txt             # Python dependencies
 ├── assess_auto.py               # Automatic evaluation script (recommended)
 ├── assess.py                    # Manual self-assessment script
 ├── compare.py                   # Comparison script for two results
+├── diagnose.py                  # Directory diagnostic tool
 ├── format_result.py             # Result formatter (English)
 ├── format_result_cn.py          # Result formatter (Chinese)
 ├── cases/                       # Case studies
 │   └── copaw/                   # CoPaw case study
 │       └── README.md            # Detailed documentation
-└── docs/                        # Additional documentation
 ```
 
 ---
