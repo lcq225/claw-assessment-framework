@@ -9,8 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Collaboration Rapport score: Added bilingual (English/Chinese) keyword detection
-- Chinese documents now scored correctly (previously scored 0/100)
+- Identity Cognition score: Added bilingual (English/Chinese) keyword detection
+- Chinese documents now scored correctly (previously scored 0/100 for Collaboration Rapport)
 - Added Chinese keywords for user, preference, collaboration, communication detection
+- Added Chinese keywords for role, rules, personality detection
+- **Score improvements for CoPaw:**
+  - Identity Cognition: 80/100 → 100/100 (+20)
+  - Collaboration Rapport: 0/100 → 100/100 (+100)
+  - Total Score: 480/800 → 600/800 (+120)
+  - Level: Platinum → Legendary
 
 ## [1.0.2] - 2026-04-06
 

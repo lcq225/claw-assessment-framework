@@ -98,6 +98,7 @@ Recommended: Use the first workspace directory
 3. **Database query** - Query memory database for record counts
 4. **Objective scoring** - Score based on actual data, not manual input
 5. **Detailed results** - Show inspection points for each dimension
+6. **Bilingual support** - Supports both English and Chinese keyword detection for international teams
 
 Output:
 ```
@@ -105,18 +106,18 @@ Output:
 ClawAF - Automatic Evaluation
 ============================================================
 
-Identity Cognition................................ 80/100
+Identity Cognition................................ 100/100
 Memory Capability................................. 50/100
 Security Mechanism................................ 70/100
 Automation Level.................................. 70/100
 Skill Ecosystem................................... 100/100
-Collaboration Rapport............................. 0/100
+Collaboration Rapport............................. 100/100
 Experience Accumulation........................... 40/100
 Evolution Capability.............................. 70/100
 
 ============================================================
-Total Score: 480/800
-Level: Platinum
+Total Score: 600/800
+Level: Legendary
 ============================================================
 
 Results saved to: clawaf_result.json
@@ -147,6 +148,30 @@ This generates:
 | **JSON** | Machine | Program processing, comparison, history tracking |
 | **Markdown** | Human | Quick reading, documentation, version control |
 | **HTML** | Visual | Presentation, sharing, printing |
+
+### Bilingual Support (English/Chinese)
+
+ClawAF automatically detects and evaluates documents in both English and Chinese:
+
+**Supported Languages:**
+- English (default)
+- Chinese (Simplified)
+
+**Keyword Detection:**
+
+| Dimension | English Keywords | Chinese Keywords |
+|-----------|------------------|------------------|
+| Identity - Role | role, rules, red line | 身份, 角色, 规则, 红线 |
+| Identity - Personality | personality, style | 性格, 风格 |
+| Collaboration - User | user, profile | 用户, 资料, 用户资料 |
+| Collaboration - Preference | preference, style | 偏好, 风格 |
+| Collaboration - Partner | collaborate, partner | 协作, 伙伴, 搭档 |
+| Collaboration - Communication | bluf, communication | 沟通, 交流 |
+
+**Example:**
+- Your `AGENTS.md` is in Chinese → scores correctly
+- Your `SOUL.md` is in English → scores correctly
+- Mixed language documents → detects both
 
 ### Manual Assessment
 
@@ -517,9 +542,10 @@ claw-assessment-framework/
 ### Core Scripts
 
 - **assess_auto.py** - Automatic evaluation script (recommended)
-  - Automatically scans Claw directory
+  - Automatically scans Claw workspace directory
   - Detects files, directories, and database records
   - Provides objective scoring based on actual data
+  - Supports bilingual (English/Chinese) keyword detection
   - No manual input required
 
 - **assess.py** - Manual self-assessment script
