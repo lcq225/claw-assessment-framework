@@ -529,6 +529,12 @@ claw-assessment-framework/
 
 ---
 
+## 更新日志
+
+详见 [CHANGELOG.md](CHANGELOG.md) 获取详细的更新历史。
+
+---
+
 ## 版本历史
 
 | 版本 | 日期 | 说明 |

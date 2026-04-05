@@ -434,6 +434,10 @@ Generate improvement roadmap based on assessment gaps.
 | English | [README.md](README.md) (this file) |
 | Chinese | [README_zh.md](README_zh.md) |
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
+
 ---
 
 ## Project Structure
