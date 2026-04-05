@@ -319,9 +319,15 @@ class ClawAFEvaluator:
             profile_file = self._find_most_relevant_file(profile_files, ["workspaces", "default"])
             if profile_file and profile_file.exists():
                 content = profile_file.read_text(encoding='utf-8', errors='ignore')
-                if "user" in content.lower() or "profile" in content.lower():
+
+                # Check for user information (English and Chinese)
+                user_keywords = ["user", "用户", "profile", "资料", "用户资料"]
+                if any(k in content.lower() for k in user_keywords):
                     score += 30
-                if "preference" in content.lower() or "style" in content.lower():
+
+                # Check for preference (English and Chinese)
+                pref_keywords = ["preference", "偏好", "style", "风格", "preference", "style"]
+                if any(k in content.lower() for k in pref_keywords):
                     score += 20
 
         # Check SOUL.md for collaboration guidelines - search recursively
@@ -330,7 +336,10 @@ class ClawAFEvaluator:
             soul_file = self._find_most_relevant_file(soul_files, ["workspaces", "default"])
             if soul_file and soul_file.exists():
                 content = soul_file.read_text(encoding='utf-8', errors='ignore')
-                if "collaborate" in content.lower() or "partner" in content.lower():
+
+                # Check for collaboration keywords (English and Chinese)
+                collab_keywords = ["collaborate", "协作", "partner", "伙伴", "搭档"]
+                if any(k in content.lower() for k in collab_keywords):
                     score += 30
 
         # Check AGENTS.md for communication style - search recursively
@@ -339,7 +348,10 @@ class ClawAFEvaluator:
             agents_file = self._find_most_relevant_file(agents_files, ["workspaces", "default"])
             if agents_file and agents_file.exists():
                 content = agents_file.read_text(encoding='utf-8', errors='ignore')
-                if "bluf" in content.lower() or "communication" in content.lower():
+
+                # Check for communication keywords (English and Chinese)
+                comm_keywords = ["bluf", "communication", "沟通", "交流"]
+                if any(k in content.lower() for k in comm_keywords):
                     score += 20
 
         return min(score, 100)
