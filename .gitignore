@@ -20,4 +20,7 @@ env/
 
 # OS
 .DS_Store
-Thumbs.db
+Thumbs.db.pypirc  
+dist/  
+build/  
+*.egg-info/  
