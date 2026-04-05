@@ -28,7 +28,54 @@ cd claw-assessment-framework
 pip install -r requirements.txt
 ```
 
-### Self-Assessment
+### Automatic Evaluation (Recommended)
+
+The script will automatically scan your Claw directory and evaluate based on actual files and configurations:
+
+```bash
+python assess_auto.py
+```
+
+Or specify your Claw directory:
+
+```bash
+python assess_auto.py --dir /path/to/your/claw
+```
+
+**How it works:**
+
+1. **Auto-detection** - Automatically find your Claw directory
+2. **File scanning** - Scan for key files (AGENTS.md, memory.db, skills, etc.)
+3. **Database query** - Query memory database for record counts
+4. **Objective scoring** - Score based on actual data, not manual input
+5. **Detailed results** - Show inspection points for each dimension
+
+Output:
+```
+============================================================
+ClawAF - Automatic Evaluation
+============================================================
+
+Identity Cognition................................ 80/100
+Memory Capability................................. 50/100
+Security Mechanism................................ 70/100
+Automation Level.................................. 70/100
+Skill Ecosystem................................... 100/100
+Collaboration Rapport............................. 0/100
+Experience Accumulation........................... 40/100
+Evolution Capability.............................. 70/100
+
+============================================================
+Total Score: 480/800
+Level: Platinum
+============================================================
+
+Results saved to: clawaf_result.json
+```
+
+### Manual Assessment
+
+For manual evaluation, run the interactive script:
 
 ```bash
 python assess.py
