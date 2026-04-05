@@ -119,9 +119,15 @@ class ClawAFEvaluator:
                 content = agents_file.read_text(encoding='utf-8', errors='ignore')
                 if len(content) > 1000:
                     score += 30
-                if "role" in content.lower():
+
+                # Check for role (English and Chinese)
+                role_keywords = ["role", "身份", "角色"]
+                if any(k in content.lower() for k in role_keywords):
                     score += 10
-                if "rules" in content.lower() or "red line" in content.lower():
+
+                # Check for rules (English and Chinese)
+                rule_keywords = ["rules", "规则", "red line", "红线", "规则红线"]
+                if any(k in content.lower() for k in rule_keywords):
                     score += 10
 
         # Check SOUL.md - search recursively
@@ -132,7 +138,10 @@ class ClawAFEvaluator:
                 content = soul_file.read_text(encoding='utf-8', errors='ignore')
                 if len(content) > 500:
                     score += 25
-                if "personality" in content.lower() or "style" in content.lower():
+
+                # Check for personality (English and Chinese)
+                personality_keywords = ["personality", "性格", "风格", "style"]
+                if any(k in content.lower() for k in personality_keywords):
                     score += 10
 
         # Check PROFILE.md - search recursively
