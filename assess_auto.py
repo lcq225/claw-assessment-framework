@@ -101,34 +101,53 @@ class ClawAFEvaluator:
         """Evaluate Identity Cognition (0-100)"""
         score = 0
 
-        # Check AGENTS.md
-        agents_file = self.claw_dir / "AGENTS.md"
-        if agents_file.exists():
-            content = agents_file.read_text(encoding='utf-8', errors='ignore')
-            if len(content) > 1000:
-                score += 30
-            if "role" in content.lower():
-                score += 10
-            if "rules" in content.lower() or "red line" in content.lower():
-                score += 10
+        # Check AGENTS.md - search recursively
+        agents_files = list(self.claw_dir.rglob("AGENTS.md"))
+        if agents_files:
+            # Pick the most relevant one (prefer workspaces/default)
+            agents_file = self._find_most_relevant_file(agents_files, ["workspaces", "default"])
+            if agents_file and agents_file.exists():
+                content = agents_file.read_text(encoding='utf-8', errors='ignore')
+                if len(content) > 1000:
+                    score += 30
+                if "role" in content.lower():
+                    score += 10
+                if "rules" in content.lower() or "red line" in content.lower():
+                    score += 10
 
-        # Check SOUL.md
-        soul_file = self.claw_dir / "SOUL.md"
-        if soul_file.exists():
-            content = soul_file.read_text(encoding='utf-8', errors='ignore')
-            if len(content) > 500:
-                score += 25
-            if "personality" in content.lower() or "style" in content.lower():
-                score += 10
+        # Check SOUL.md - search recursively
+        soul_files = list(self.claw_dir.rglob("SOUL.md"))
+        if soul_files:
+            soul_file = self._find_most_relevant_file(soul_files, ["workspaces", "default"])
+            if soul_file and soul_file.exists():
+                content = soul_file.read_text(encoding='utf-8', errors='ignore')
+                if len(content) > 500:
+                    score += 25
+                if "personality" in content.lower() or "style" in content.lower():
+                    score += 10
 
-        # Check PROFILE.md
-        profile_file = self.claw_dir / "PROFILE.md"
-        if profile_file.exists():
-            content = profile_file.read_text(encoding='utf-8', errors='ignore')
-            if len(content) > 200:
-                score += 15
+        # Check PROFILE.md - search recursively
+        profile_files = list(self.claw_dir.rglob("PROFILE.md"))
+        if profile_files:
+            profile_file = self._find_most_relevant_file(profile_files, ["workspaces", "default"])
+            if profile_file and profile_file.exists():
+                content = profile_file.read_text(encoding='utf-8', errors='ignore')
+                if len(content) > 200:
+                    score += 15
 
         return min(score, 100)
+
+    def _find_most_relevant_file(self, files: List[Path], preferred_keywords: List[str]) -> Path:
+        """Find the most relevant file from a list of files"""
+        # Prefer files that contain preferred keywords in their path
+        for file in files:
+            path_str = str(file).lower()
+            for keyword in preferred_keywords:
+                if keyword.lower() in path_str:
+                    return file
+
+        # Return the first file if no preferred match
+        return files[0] if files else None
 
     def evaluate_memory_capability(self) -> int:
         """Evaluate Memory Capability (0-100)"""
@@ -240,17 +259,14 @@ class ClawAFEvaluator:
         """Evaluate Skill Ecosystem (0-100)"""
         score = 0
 
-        # Find skill directories
-        skill_dirs = [
-            self.claw_dir / "skills",
-            self.claw_dir / "active_skills",
-        ]
+        # Find skill directories recursively
+        skill_dirs = list(self.claw_dir.rglob("skills")) + list(self.claw_dir.rglob("active_skills"))
 
         total_skills = 0
         documented_skills = 0
 
         for skill_dir in skill_dirs:
-            if skill_dir.exists():
+            if skill_dir.is_dir():
                 for skill in skill_dir.iterdir():
                     if skill.is_dir() and not skill.name.startswith('.'):
                         total_skills += 1
@@ -472,12 +488,26 @@ class ClawAFEvaluator:
     def _get_identity_details(self) -> Dict:
         """Get identity details"""
         details = {}
-        agents_file = self.claw_dir / "AGENTS.md"
-        details["AGENTS.md"] = "Found" if agents_file.exists() else "Not Found"
-        soul_file = self.claw_dir / "SOUL.md"
-        details["SOUL.md"] = "Found" if soul_file.exists() else "Not Found"
-        profile_file = self.claw_dir / "PROFILE.md"
-        details["PROFILE.md"] = "Found" if profile_file.exists() else "Not Found"
+
+        # Search recursively
+        agents_files = list(self.claw_dir.rglob("AGENTS.md"))
+        if agents_files:
+            details["AGENTS.md"] = f"{len(agents_files)} found"
+        else:
+            details["AGENTS.md"] = "Not Found"
+
+        soul_files = list(self.claw_dir.rglob("SOUL.md"))
+        if soul_files:
+            details["SOUL.md"] = f"{len(soul_files)} found"
+        else:
+            details["SOUL.md"] = "Not Found"
+
+        profile_files = list(self.claw_dir.rglob("PROFILE.md"))
+        if profile_files:
+            details["PROFILE.md"] = f"{len(profile_files)} found"
+        else:
+            details["PROFILE.md"] = "Not Found"
+
         return details
 
     def _get_memory_details(self) -> Dict:
@@ -543,16 +573,14 @@ class ClawAFEvaluator:
         """Get skill details"""
         details = {}
 
-        skill_dirs = [
-            self.claw_dir / "skills",
-            self.claw_dir / "active_skills",
-        ]
+        # Find skill directories recursively
+        skill_dirs = list(self.claw_dir.rglob("skills")) + list(self.claw_dir.rglob("active_skills"))
 
         total_skills = 0
         documented_skills = 0
 
         for skill_dir in skill_dirs:
-            if skill_dir.exists():
+            if skill_dir.is_dir():
                 for skill in skill_dir.iterdir():
                     if skill.is_dir() and not skill.name.startswith('.'):
                         total_skills += 1
@@ -564,17 +592,26 @@ class ClawAFEvaluator:
         details["Total Skills"] = total_skills
         details["Documented Skills"] = documented_skills
         details["Documentation Rate"] = f"{(documented_skills/total_skills*100):.1f}%" if total_skills > 0 else "N/A"
+        details["Skill Directories Found"] = len(skill_dirs)
 
         return details
 
     def _get_collaboration_details(self) -> Dict:
         """Get collaboration details"""
         details = {}
-        profile_file = self.claw_dir / "PROFILE.md"
-        details["PROFILE.md"] = "Found" if profile_file.exists() else "Not Found"
 
-        soul_file = self.claw_dir / "SOUL.md"
-        details["SOUL.md"] = "Found" if soul_file.exists() else "Not Found"
+        # Search recursively
+        profile_files = list(self.claw_dir.rglob("PROFILE.md"))
+        if profile_files:
+            details["PROFILE.md"] = f"{len(profile_files)} found"
+        else:
+            details["PROFILE.md"] = "Not Found"
+
+        soul_files = list(self.claw_dir.rglob("SOUL.md"))
+        if soul_files:
+            details["SOUL.md"] = f"{len(soul_files)} found"
+        else:
+            details["SOUL.md"] = "Not Found"
 
         return details
 
