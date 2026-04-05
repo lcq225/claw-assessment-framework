@@ -24,3 +24,14 @@ Thumbs.db.pypirc
 dist/  
 build/  
 *.egg-info/  
+
+# Sensitive files (CRITICAL!)
+*.pypirc
+.env
+*.env
+*.key
+*.pem
+_secret
+_token
+_credential
+_password
