@@ -304,28 +304,34 @@ class ClawAFEvaluator:
         """Evaluate Collaboration Rapport (0-100)"""
         score = 0
 
-        # Check PROFILE.md for user information
-        profile_file = self.claw_dir / "PROFILE.md"
-        if profile_file.exists():
-            content = profile_file.read_text(encoding='utf-8', errors='ignore')
-            if "user" in content.lower() or "profile" in content.lower():
-                score += 30
-            if "preference" in content.lower() or "style" in content.lower():
-                score += 20
+        # Check PROFILE.md for user information - search recursively
+        profile_files = list(self.claw_dir.rglob("PROFILE.md"))
+        if profile_files:
+            profile_file = self._find_most_relevant_file(profile_files, ["workspaces", "default"])
+            if profile_file and profile_file.exists():
+                content = profile_file.read_text(encoding='utf-8', errors='ignore')
+                if "user" in content.lower() or "profile" in content.lower():
+                    score += 30
+                if "preference" in content.lower() or "style" in content.lower():
+                    score += 20
 
-        # Check SOUL.md for collaboration guidelines
-        soul_file = self.claw_dir / "SOUL.md"
-        if soul_file.exists():
-            content = soul_file.read_text(encoding='utf-8', errors='ignore')
-            if "collaborate" in content.lower() or "partner" in content.lower():
-                score += 30
+        # Check SOUL.md for collaboration guidelines - search recursively
+        soul_files = list(self.claw_dir.rglob("SOUL.md"))
+        if soul_files:
+            soul_file = self._find_most_relevant_file(soul_files, ["workspaces", "default"])
+            if soul_file and soul_file.exists():
+                content = soul_file.read_text(encoding='utf-8', errors='ignore')
+                if "collaborate" in content.lower() or "partner" in content.lower():
+                    score += 30
 
-        # Check AGENTS.md for communication style
-        agents_file = self.claw_dir / "AGENTS.md"
-        if agents_file.exists():
-            content = agents_file.read_text(encoding='utf-8', errors='ignore')
-            if "bluf" in content.lower() or "communication" in content.lower():
-                score += 20
+        # Check AGENTS.md for communication style - search recursively
+        agents_files = list(self.claw_dir.rglob("AGENTS.md"))
+        if agents_files:
+            agents_file = self._find_most_relevant_file(agents_files, ["workspaces", "default"])
+            if agents_file and agents_file.exists():
+                content = agents_file.read_text(encoding='utf-8', errors='ignore')
+                if "bluf" in content.lower() or "communication" in content.lower():
+                    score += 20
 
         return min(score, 100)
 
