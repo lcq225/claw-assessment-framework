@@ -73,6 +73,32 @@ Level: Platinum
 Results saved to: clawaf_result.json
 ```
 
+### Convert Results to Other Formats
+
+After generating the JSON result, convert to human-readable formats:
+
+```bash
+# English versions
+python format_result.py clawaf_result.json
+
+# Chinese versions
+python format_result_cn.py clawaf_result.json
+```
+
+This generates:
+- `clawaf_result.json` - Machine-readable (program processing, comparison, history)
+- `clawaf_result.md` - Human-readable (viewing, sharing, archiving)
+- `clawaf_result.html` - Visual report (browser viewing, presentation)
+- `clawaf_result_cn.*` - Chinese versions
+
+**Format Comparison:**
+
+| Format | Best For | Use Case |
+|--------|----------|----------|
+| **JSON** | Machine | Program processing, comparison, history tracking |
+| **Markdown** | Human | Quick reading, documentation, version control |
+| **HTML** | Visual | Presentation, sharing, printing |
+
 ### Manual Assessment
 
 For manual evaluation, run the interactive script:
@@ -422,6 +448,8 @@ claw-assessment-framework/
 ├── assess_auto.py               # Automatic evaluation script (recommended)
 ├── assess.py                    # Manual self-assessment script
 ├── compare.py                   # Comparison script for two results
+├── format_result.py             # Result formatter (English)
+├── format_result_cn.py          # Result formatter (Chinese)
 ├── cases/                       # Case studies
 │   └── copaw/                   # CoPaw case study
 │       └── README.md            # Detailed documentation
@@ -448,6 +476,16 @@ claw-assessment-framework/
   - Compare two evaluation results
   - Show score changes and dimension differences
   - Detailed insight into improvements
+
+- **format_result.py** - Result formatter (English)
+  - Convert JSON to Markdown and HTML
+  - Generate human-readable reports
+  - Support for progress bars and visual elements
+
+- **format_result_cn.py** - Result formatter (Chinese)
+  - Convert JSON to Chinese Markdown and HTML
+  - Translate dimension names and levels
+  - Support for Chinese users
 
 ### Documentation
 

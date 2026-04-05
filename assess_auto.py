@@ -3,12 +3,21 @@
 """
 ClawAF Auto-Assessment Script
 Automatically evaluates Claw-based AI Agent systems
+
+Features:
+- Auto-detect Claw directory
+- Evaluate 8 dimensions based on actual files and configurations
+- Objective scoring instead of manual input
+- Multiple output formats (JSON, Markdown, HTML)
+- English and Chinese versions
 """
 import json
+import argparse
 from pathlib import Path
 import subprocess
 import re
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
+from datetime import datetime
 
 # Claw directory detection
 CLAW_DIRECTORIES = [
@@ -657,11 +666,12 @@ class ClawAFEvaluator:
 
 def main():
     """Main entry point"""
-    import argparse
-
-    parser = argparse.ArgumentParser(description='ClawAF Automatic Evaluation')
+    parser = argparse.ArgumentParser(
+        description='ClawAF Automatic Evaluation',
+        epilog='Example: python assess_auto.py --dir /path/to/claw'
+    )
     parser.add_argument('--dir', type=str, help='Claw directory (auto-detect if not specified)')
-    parser.add_argument('--output', type=str, default='clawaf_result.json', help='Output file')
+    parser.add_argument('--output', type=str, default='clawaf_result.json', help='Output JSON file')
 
     args = parser.parse_args()
 
@@ -675,11 +685,15 @@ def main():
             json.dump(result, f, ensure_ascii=False, indent=2)
 
         print(f"\nResults saved to: {output_file}")
+        print(f"\nTo convert to other formats:")
+        print(f"  python format_result.py {output_file}")
+        print(f"  python format_result_cn.py {output_file}")
 
     except Exception as e:
         print(f"\nError: {e}")
         import traceback
         traceback.print_exc()
+
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,7 @@
-# ClawAF Results
-*.json
+# ClawAF Results (generated files)
+clawaf_result*.json
+clawaf_result*.md
+clawaf_result*.html
 
 # Python
 __pycache__/
