@@ -508,6 +508,8 @@ claw-assessment-framework/
 
 | Version | Date | Description |
 |---------|------|-------------|
+| v1.0.2 | 2026-04-06 | Add multi-format output support (JSON/MD/HTML) with English and Chinese versions |
+| v1.0.1 | 2026-04-05 | Fix recursive file detection, add comparison script |
 | v1.0.0 | 2026-04-05 | Initial version, 8 dimensions defined |
 
 ---

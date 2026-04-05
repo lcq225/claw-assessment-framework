@@ -4,7 +4,7 @@
 
 **Project Name:** CoPaw
 **Evaluation Date:** 2026-04-06
-**ClawAF Version:** 1.0.0
+**ClawAF Version:** 1.0.2
 **Total Score:** 560/800
 **Level:** Diamond
 
@@ -136,9 +136,19 @@ With improvements in memory integration and experience tracking, CoPaw has the p
 ## Evaluation Command
 
 ```bash
+# Run automatic evaluation
 python assess_auto.py --dir D:\CoPaw\.copaw\workspaces\default
+
+# Convert to multiple formats
+python format_result.py clawaf_result.json       # English (MD + HTML)
+python format_result_cn.py clawaf_result.json    # Chinese (MD + HTML)
 ```
 
-## Results File
+## Generated Files
 
-Full evaluation results saved to: `clawaf_result.json`
+- `clawaf_result.json` - Machine-readable result
+- `clawaf_result.md` - English Markdown report
+- `clawaf_result.html` - English HTML report
+- `clawaf_result_cn.json` - Chinese JSON (with translations)
+- `clawaf_result_cn.md` - Chinese Markdown report
+- `clawaf_result_cn.html` - Chinese HTML report
