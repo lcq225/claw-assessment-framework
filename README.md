@@ -414,14 +414,55 @@ Generate improvement roadmap based on assessment gaps.
 
 ```
 claw-assessment-framework/
-├── README.md               # English documentation
-├── README_zh.md            # Chinese documentation
-├── assess.py               # Self-assessment script
-├── compare.py              # Team comparison script
-├── cases/                  # Case studies
-│   └── copaw/              # CoPaw case
-└── docs/                   # Additional documentation
+├── README.md                    # English documentation
+├── README_zh.md                 # Chinese documentation
+├── LICENSE                      # MIT License
+├── .gitignore                   # Git ignore rules
+├── requirements.txt             # Python dependencies
+├── assess_auto.py               # Automatic evaluation script (recommended)
+├── assess.py                    # Manual self-assessment script
+├── compare.py                   # Comparison script for two results
+├── cases/                       # Case studies
+│   └── copaw/                   # CoPaw case study
+│       └── README.md            # Detailed documentation
+└── docs/                        # Additional documentation
 ```
+
+---
+
+## Files Description
+
+### Core Scripts
+
+- **assess_auto.py** - Automatic evaluation script (recommended)
+  - Automatically scans Claw directory
+  - Detects files, directories, and database records
+  - Provides objective scoring based on actual data
+  - No manual input required
+
+- **assess.py** - Manual self-assessment script
+  - Interactive questionnaire
+  - Suitable for teams without complete file structure
+
+- **compare.py** - Comparison script
+  - Compare two evaluation results
+  - Show score changes and dimension differences
+  - Detailed insight into improvements
+
+### Documentation
+
+- **README.md** - English documentation
+- **README_zh.md** - Chinese documentation
+- **LICENSE** - MIT License
+- **requirements.txt** - No external dependencies (Python stdlib only)
+
+### Case Studies
+
+- **cases/copaw/README.md** - Detailed CoPaw case study
+  - Directory structure
+  - Evaluation results breakdown
+  - Strengths and areas for improvement
+  - Key features and insights
 
 ---
 
